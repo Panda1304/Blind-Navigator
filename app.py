@@ -1,9 +1,29 @@
-from yolomodel.detector import ObjectDetector
-from yolomodel.utils import format_detections_for_speech
+from yolomodel.detector import detect_on_image
+from tts.tts_engine import speak_text
+from vision.describer import describe_scene_tinyllama
+from ultralytics import YOLO
+import os
 
-detector = ObjectDetector(target_classes=["person", "car", "bicycle"])
+model = YOLO("yolov8n.pt")
 
-detections = detector.detect_objects(frame) # frame from webcam or video
-description = format_detections_for_speech(detections)
+image_path = r"assets\pedestrian-person-road-traffic-street-car-night-adventure-backpack-driving-city-taxi-cab-transport-evening-vehicle-color-lights-infrastructure-1083012-111143950.jpg"
 
-print(description) # Output: "A person is on your left, a car is on your center."
+if os.path.exists(image_path):
+    results = detect_on_image(image_path)
+    detections = []
+    c=0
+    for box in results.boxes:
+        c+=1
+        print(c)
+        x1, y1, x2, y2 = box.xyxy[0].tolist()
+        cls_id = int(box.cls[0].item())
+        label = model.names[cls_id]
+        detections.append({"label": label, "bbox": [x1, y1, x2, y2]})
+        
+    print(detections)
+
+    spoken = describe_scene_tinyllama(detections, frame_width=640)
+    print("Description:", spoken)
+    speak_text(spoken)
+else:
+    print("Invalid image path.")
