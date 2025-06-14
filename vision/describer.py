@@ -17,7 +17,7 @@ def estimate_distance(x1, x2):
 def describe_scene_tinyllama(detections, frame_width, use_llm=True):
     if not detections:
         return "I couldn't detect anything in your surroundings."
-
+    
     if not use_llm:
         description = []
         for det in detections:
@@ -28,9 +28,10 @@ def describe_scene_tinyllama(detections, frame_width, use_llm=True):
             distance = estimate_distance(x1, x2)
             description.append(f"{label} {position}, about {distance} meters away")
         return ". ".join(description)
-
+    
     summary_parts = []
     for det in detections:
+     
         label = det["label"]
         x1, _, x2, _ = det["bbox"]
         x_center = (x1 + x2) / 2
@@ -40,9 +41,10 @@ def describe_scene_tinyllama(detections, frame_width, use_llm=True):
     grounded_summary = ", ".join(summary_parts)
 
 
-    prompt = f"""<|system|>Your job is to assist a blind user as their camera sees with no nonsense just facts . Be concise and speak as if you are guiding them in real time.only return a sentence describing their positions and distances.
-    </s><|user|>The following objects were detected in a {frame_width}px wide frame:{grounded_summary}.</s><|assistant|>"""
+    prompt = f"""<|system|>Your job is to assist a blind user as their camera sees with no nonsense just facts . Be concise and speak as if you are guiding them in real time.only return a sentence describing their positions and distances.</s>
+<|user|>The following objects were detected in a {frame_width}px wide frame:{grounded_summary}.</s><|assistant|>"""
 
+    
     response = pipe(prompt, max_new_tokens=100, do_sample=True, temperature=0.7)[0]["generated_text"]
     return response.split("<|assistant|>")[-1].strip()
 
@@ -57,5 +59,12 @@ def input_for_func(results):
     return detections
 
 #Sample test
-#detections = input_for_func(results)
-#describe_scene_tinyllama(detections, frame_width=640)
+detections = [
+        {"label": "person", "bbox": [80, 120, 160, 300]},
+        {"label": "bicycle", "bbox": [400, 100, 520, 280]},
+        {"label": "car", "bbox": [300, 200, 320, 180]},
+        {"label": "car", "bbox": [500, 200, 800, 180]}
+    ]
+# detections = input_for_func(results)
+spoken = describe_scene_tinyllama(detections, frame_width=640)
+print("Description:",spoken)
