@@ -138,27 +138,4 @@ Pull requests are welcome! Please open an issue first to discuss what you’d li
 
 ---
 
-## License
-
-MIT © 2025 Yuktha C.
-
-
-## Roadmap
-
-* [ ] Add obstacle distance estimation with monocular depth ↑
-* [ ] Support for multi‑language narration
-* [ ] Mobile PWA wrapper for on‑the‑go use
-
----
-
-## Contributing
-
-Pull requests are welcome! Please open an issue first to discuss what you’d like to change.
-
-1. Fork → clone → create a feature branch
-2. Write clear, test‑covered code
-3. Run `ruff` + `black` before committing
-4. Open a PR
-
----
 
