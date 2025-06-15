@@ -15,7 +15,7 @@ With AI and computer vision becoming more accessible, we thought: why not use a 
 ---
 ## Proposed Solution
 
-We’re building a mobile-based AI assistant that helps visually impaired users understand their surroundings in real time. Using the phone’s camera, our app will detect nearby objects—like people, vehicles, stairs, or obstacles—using a pre-trained object detection model (YOLOv8). It then converts that visual information into simple, spoken descriptions using text-to-speech (TTS), so the user can hear what’s around them.
+We’re building an AI assistant that helps visually impaired users understand their surroundings in real time. Using the phone’s camera, our app will detect nearby objects—like people, vehicles, stairs, or obstacles—using a pre-trained object detection model (YOLOv8). It then converts that visual information into simple, spoken descriptions using text-to-speech (TTS), so the user can hear what’s around them.
 
 The goal is to make it feel like the phone is their "eyes that talk"—giving them real-time awareness without needing any expensive or extra hardware. It’s lightweight, runs locally, and is designed to be simple, fast, and genuinely helpful.
 
